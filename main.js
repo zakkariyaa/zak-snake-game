@@ -8,9 +8,9 @@ let foodTop = gameBoardHeight;
 let foodLeft = gameBoardWidth;
 
 // put food pieces at random board places
-const handleFoodPlacement = (width, height) => {
-  const randomWidth = Math.floor(Math.random() * width);
-  const randomHeight = Math.floor(Math.random() * height);
+const handleFoodPlacement = () => {
+  const randomWidth = Math.floor(Math.random() * gameBoardWidth);
+  const randomHeight = Math.floor(Math.random() * gameBoardHeight);
 
   // remove previous food piece
   const oldFoodEl = document.querySelector('.food');
@@ -29,4 +29,23 @@ const handleFoodPlacement = (width, height) => {
   foodLeft = randomWidth;
 };
 
-handleFoodPlacement(gameBoardWidth, gameBoardHeight);
+handleFoodPlacement();
+
+// detect snake food collision
+const snakePiece = document.querySelector('.first');
+
+const handleSnakeMovement = (event, snakePiece) => {
+  snakePiece.style.top = `${event.clientY}px`;
+  snakePiece.style.left = `${event.clientX}px`;
+
+  const verticalCollision = Math.abs(event.clientY - foodTop);
+  const horizontalCollision = Math.abs(event.clientX - foodLeft);
+
+  if (verticalCollision < 7 && horizontalCollision < 7) {
+    handleFoodPlacement();
+  }
+};
+
+gameBoard.addEventListener('mousemove', (event) => {
+  handleSnakeMovement(event, snakePiece);
+});
