@@ -23,6 +23,8 @@
 /* ------------------------ */
 /* game board */
 .game__board {
+  position: relative;
+
   margin-top: 2rem;
   height: 70vh;
   background: #000000;
@@ -30,10 +32,13 @@
 }
 
 /* snake grid */
-.snake__grid {
+/* .snake__grid {
   place-items: center;
-}
-.snake__grid .first {
+} */
+
+.first {
+  position: absolute;
+
   width: 10px;
   height: 10px;
   background: #fff;
@@ -41,6 +46,8 @@
 
 /* food */
 .food {
+  position: absolute;
+
   width: 10px;
   height: 10px;
   background: #fff;
