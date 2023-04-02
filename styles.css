@@ -7,11 +7,42 @@
 /* ------------------------ */
 /* primitive styles */
 .center {
-  width: 80%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .flex {
   display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+/* ------------------------ */
+/* game board */
+.game__board {
+  margin-top: 2rem;
+  height: 70vh;
+  background: #000000;
+  border: 1px solid green;
+}
+
+/* snake grid */
+.snake__grid {
+  place-items: center;
+}
+.snake__grid .first {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+}
+
+/* food */
+.food {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
 }
