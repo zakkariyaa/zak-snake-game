@@ -7,7 +7,8 @@ const gameBoardHeight = gameBoard.getBoundingClientRect().height;
 let foodTop = gameBoardHeight;
 let foodLeft = gameBoardWidth;
 
-// put food pieces at random board places
+// ---------------------------
+// food placement on the board
 const handleFoodPlacement = () => {
   const randomWidth = Math.floor(Math.random() * gameBoardWidth);
   const randomHeight = Math.floor(Math.random() * gameBoardHeight);
@@ -31,21 +32,56 @@ const handleFoodPlacement = () => {
 
 handleFoodPlacement();
 
-// detect snake food collision
+// ---------------------------
+// snake movement
+
+// set initial position of snake's head
 const snakePiece = document.querySelector('.first');
+snakePiece.style.top = gameBoardHeight / 2 + 'px';
+snakePiece.style.left = gameBoardWidth / 2 + 'px';
 
-const handleSnakeMovement = (event, snakePiece) => {
-  snakePiece.style.top = `${event.clientY}px`;
-  snakePiece.style.left = `${event.clientX}px`;
+let horizontalVelocity = 0;
+let verticalVelocity = 0;
 
-  const verticalCollision = Math.abs(event.clientY - foodTop);
-  const horizontalCollision = Math.abs(event.clientX - foodLeft);
+const handleSnakeMovement = (event) => {
+  const direction = event.key;
 
-  if (verticalCollision < 7 && horizontalCollision < 7) {
-    handleFoodPlacement();
+  // Move the snake's head based on the direction
+  switch (direction) {
+    case 'ArrowUp':
+      horizontalVelocity = 0;
+      verticalVelocity = -10;
+      break;
+    case 'ArrowDown':
+      horizontalVelocity = 0;
+      verticalVelocity = 10;
+      break;
+    case 'ArrowLeft':
+      horizontalVelocity = -10;
+      verticalVelocity = 0;
+      break;
+    case 'ArrowRight':
+      horizontalVelocity = 10;
+      verticalVelocity = 0;
+      break;
   }
 };
 
-gameBoard.addEventListener('mousemove', (event) => {
-  handleSnakeMovement(event, snakePiece);
-});
+document.addEventListener('keydown', handleSnakeMovement);
+
+// update the position of the snake every 100ms
+setInterval(() => {
+  const currentX = parseInt(snakePiece.style.left);
+  const currentY = parseInt(snakePiece.style.top);
+  const nextX = currentX + horizontalVelocity;
+  const nextY = currentY + verticalVelocity;
+
+  // snake stays within border boundary
+  if (nextX >= 0 && nextX <= gameBoardWidth) {
+    snakePiece.style.left = nextX + 'px';
+  }
+
+  if (nextY >= 0 && nextY <= gameBoardHeight) {
+    snakePiece.style.top = nextY + 'px';
+  }
+}, 100);
