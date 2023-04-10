@@ -31,19 +31,24 @@
   border: 1px solid green;
 }
 
+/* ------------- */
 /* snake grid */
-/* .snake__grid {
+.snake__grid {
   place-items: center;
-} */
+}
 
 .first {
   position: absolute;
-
   width: 10px;
   height: 10px;
   background: #fff;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
+/* ------------- */
 /* food */
 .food {
   position: absolute;
