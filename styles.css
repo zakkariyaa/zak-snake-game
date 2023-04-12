@@ -58,3 +58,19 @@
   background: #fff;
   border-radius: 50%;
 }
+
+/* ------------- */
+/* start button */
+.start__btn {
+  position: absolute;
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: none;
+}
