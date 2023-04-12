@@ -1,40 +1,15 @@
-// game board coordinates
+import { handleFoodPlacement } from './utils/handleFoodPlacement.js';
+import { handleSnakeFoodCollision } from './utils/handleSnakeFoodCollision.js';
+
 const gameBoard = document.querySelector('.game__board');
 const gameBoardWidth = gameBoard.getBoundingClientRect().width;
 const gameBoardHeight = gameBoard.getBoundingClientRect().height;
 
-// current food coordinates
-let foodTop = gameBoardHeight;
-let foodLeft = gameBoardWidth;
-
-// ---------------------------
-// food placement on the board
-const handleFoodPlacement = () => {
-  const randomWidth = Math.floor(Math.random() * gameBoardWidth);
-  const randomHeight = Math.floor(Math.random() * gameBoardHeight);
-
-  // remove previous food piece
-  const oldFoodEl = document.querySelector('.food');
-  if (oldFoodEl) {
-    oldFoodEl.remove();
-  }
-
-  const foodEl = document.createElement('p');
-  foodEl.classList.add('food');
-  foodEl.style.top = `${randomHeight}px`;
-  foodEl.style.left = `${randomWidth}px`;
-
-  gameBoard.append(foodEl);
-
-  foodTop = randomHeight;
-  foodLeft = randomWidth;
-};
-
-handleFoodPlacement();
+// current food positions
+handleFoodPlacement(gameBoardHeight, gameBoardWidth);
 
 // ---------------------------
 // snake movement
-
 // set initial position of snake's head
 const snakePiece = document.querySelector('.first');
 snakePiece.style.top = gameBoardHeight / 2 + 'px';
@@ -67,6 +42,7 @@ const handleSnakeMovement = (event) => {
   }
 };
 
+// add event listener for snake movement
 document.addEventListener('keydown', handleSnakeMovement);
 
 // update the position of the snake every 100ms
@@ -84,4 +60,6 @@ setInterval(() => {
   if (nextY >= 0 && nextY <= gameBoardHeight) {
     snakePiece.style.top = nextY + 'px';
   }
+
+  handleSnakeFoodCollision(currentX, currentY, gameBoardHeight, gameBoardWidth);
 }, 100);
